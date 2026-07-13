@@ -1,0 +1,2 @@
+# foil-cg
+CoG Calculator
