@@ -2,8 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Hydrofoil Mass &amp; Centre of Gravity Calculator</title>
+
+  <!-- PWA: installable, full-screen home-screen app -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1266a7">
+  <!-- iOS standalone (hides Safari browser bars) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Foil CG">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <style>
     :root {
       color-scheme: light dark;
@@ -15,7 +26,7 @@
     }
     * { box-sizing: border-box; }
     body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
-    main { max-width: 1320px; margin: 0 auto; padding: 1.5rem; }
+    main { max-width: 1320px; margin: 0 auto; padding: 1.5rem; padding-top: max(1.5rem, env(safe-area-inset-top)); padding-left: max(1.5rem, env(safe-area-inset-left)); padding-right: max(1.5rem, env(safe-area-inset-right)); }
     h1 { margin: 0 0 .25rem; font-size: 1.5rem; font-weight: 600; }
     .subtitle { color: var(--muted); margin: 0 0 1.2rem; }
     .header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; }
