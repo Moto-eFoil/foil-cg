@@ -48,7 +48,7 @@
     .control { display: flex; flex-direction: column; gap: .25rem; }
     .control label { font-size: .8rem; color: var(--muted); }
     input[type="text"], input[type="number"] { padding: .4rem; border: 1px solid var(--line); border-radius: .35rem; background: var(--panel); color: var(--text); font-size: .9rem; font-family: monospace; }
-    input[type="range"] { width: 100%; margin: .3rem 0; accent-color: var(--accent); }
+    input[type="range"] { width: 100%; margin: .3rem 0; accent-color: var(--accent); touch-action: pan-y; }
     input[type="text"]:focus, input[type="number"]:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
     .stage { position: relative; border-radius: .5rem; background: var(--accent-soft); overflow: hidden; margin-bottom: .5rem; }
     .stage img { display: block; width: 100%; height: auto; }
@@ -62,11 +62,40 @@
     .legend { display: grid; gap: .4rem; margin-top: .8rem; font-size: .8rem; }
     .legend-item { display: flex; align-items: center; gap: .4rem; color: var(--muted); }
     .formula { margin-top: .6rem; padding: .6rem; background: var(--accent-soft); border-radius: .3rem; font-size: .8rem; font-family: monospace; }
+    .scroll-gutter { display: none; }
     @media (max-width: 700px) {
       main { padding: 1rem; }
       .layout { grid-template-columns: 1fr; }
       .results { grid-template-columns: repeat(2, 1fr); }
       .input-group { grid-template-columns: 1fr; }
+
+      /* Reserve a control-free strip down the right edge for thumb scrolling.
+         The inputs card is inset so no slider reaches into the gutter. */
+      :root { --scroll-gutter: 4.5rem; }
+      .inputs-panel { position: relative; margin-right: var(--scroll-gutter); }
+      .scroll-gutter {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: calc(-1 * var(--scroll-gutter));
+        width: var(--scroll-gutter);
+        height: 100%;
+        touch-action: pan-y;            /* guarantees vertical scrolling here */
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      .scroll-gutter::before {
+        content: '';
+        position: sticky;
+        top: 45vh;
+        display: block;
+        width: 4px;
+        height: 64px;
+        margin: 0 auto;
+        border-radius: 2px;
+        background: var(--line);
+        opacity: .8;
+      }
       /* Pin the side view to the top and let the inputs scroll beneath it. */
       .image-panel {
         order: -1;
@@ -100,8 +129,9 @@
     </section>
 
     <div class="layout">
-      <section class="card" aria-label="Hydrofoil mass and position inputs">
+      <section class="card inputs-panel" aria-label="Hydrofoil mass and position inputs">
         <div class="components" id="component-inputs"></div>
+        <div class="scroll-gutter" aria-hidden="true"></div>
       </section>
 
       <section class="card image-panel" aria-label="Hydrofoil side view with centre of gravity marker">
